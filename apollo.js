@@ -26,20 +26,21 @@ export const logUserOut = async () => {
 };
 
 const httpLink = createHttpLink({
-  uri: "https://plastic-seahorse-87.loca.lt/graphql",
+  uri: "https://short-zebra-91.loca.lt/graphql",
 });
 
+//setContext : to add token into the header, context setter
 const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      token: token ? tokenVar() : null,
+      token: tokenVar(),
     },
   };
 });
 
 const client = new ApolloClient({
-  uri: authLink.concat(httpLink),
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 

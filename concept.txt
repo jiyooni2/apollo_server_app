@@ -149,3 +149,24 @@ AsyncStorage
 
     탭마다 카드더미가 있다고 생각
     탭의 스택 네비게이터에 있는 곳 중에 갈 수 있음
+
+
+makeVar는 useReactiveVar과 연동해야지만, 바로바로 update됨
+
+
+Flat list
+    cf)Scroll View
+    긴 데이터를 담고 있는 리스트를 다루는 더 좋은 방법
+    사용자가 끝까지 스크롤을 내리지도 않는데, 거대한 스크롤뷰를 제공하는건 비효율적
+    한번에 모든 데이터를 렌더링
+
+    FlatList renders items lazily, 오직 화면에 걸쳐진 아이템만 렌더링
+    data,renderItem(rendering function),keyExtractor set
+
+    Pull to refresh
+        add refreshing, onRefresh props to flat list
+        refreshing이 true일때 동작하고,
+        onRefresh는 당기고 나서 이벤트를 담고 있어야함
+
+apollo는 데이터를 캐쉬에 저장, 새로고침 했다고 다시 화면 전체 렌더링하지 않고
+바뀐부분만 업데이트

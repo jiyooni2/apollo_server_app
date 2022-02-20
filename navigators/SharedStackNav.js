@@ -6,6 +6,8 @@ import Search from "../screens/Search";
 import Notifications from "../screens/Notifications";
 import Photo from "../screens/Photo";
 import { Image } from "react-native";
+import Likes from "./../screens/Likes";
+import Comments from "./../screens/Comments";
 
 const Stack = createStackNavigator();
 
@@ -13,7 +15,6 @@ export default function SharedStackNav({ screenName }) {
   return (
     <Stack.Navigator
       mode="card"
-      headerMode="screen"
       screenOptions={{
         headerTintColor: "white",
         headerStyle: {
@@ -25,7 +26,7 @@ export default function SharedStackNav({ screenName }) {
     >
       {screenName === "Feed" ? (
         <Stack.Screen
-          name="Feed"
+          name="FeedScreen"
           component={Feed}
           options={{
             headerTitle: () => (
@@ -42,13 +43,15 @@ export default function SharedStackNav({ screenName }) {
         />
       ) : null}
       {screenName === "Search" ? (
-        <Stack.Screen name="Search" component={Search} />
+        <Stack.Screen name="SearchScreen" component={Search} />
       ) : null}
       {screenName === "Notifications" ? (
-        <Stack.Screen name="Notifications" component={Notifications} />
+        <Stack.Screen name="NotificationsScreen" component={Notifications} />
       ) : null}
-      <Stack.Screen name="Profile" component={Profile} />
-      <Stack.Screen name="Photo" component={Photo} />
+      <Stack.Screen name="ProfileScreen" component={Profile} />
+      <Stack.Screen name="PhotoScreen" component={Photo} />
+      <Stack.Screen name="LikesScreen" component={Likes} />
+      <Stack.Screen name="CommentsScreen" component={Comments} />
     </Stack.Navigator>
   );
 }
