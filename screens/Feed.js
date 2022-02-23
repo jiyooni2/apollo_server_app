@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components/native";
 import { TouchableOpacity } from "react-native";
 import { logUserOut } from "../apollo";
@@ -24,25 +24,31 @@ const Text = styled.Text`
 const FEED_QUERY = gql`
   query {
     seeFeed {
-      ...PhotoFragment
+      # ...PhotoFragment
       user {
         username
         avatar
       }
       caption
       comments {
-        ...CommentFragment
+        # ...CommentFragment
       }
       createdAt
       isMine
     }
   }
-  ${PHOTO_FRAGMENT}
-  ${COMMENT_FRAGMENT}
+  # ${PHOTO_FRAGMENT}
+  # ${COMMENT_FRAGMENT}
 `;
 
 function Feed({ navigation }) {
-  const { data, loading, refetch } = useQuery(FEED_QUERY);
+  const [offset, setOffset] = useState(0);
+
+  const { data, loading, refetch, fetchMore } = useQuery(FEED_QUERY, {
+    variables: { offset },
+  });
+
+  console.log(data);
 
   //각각 하나씩 item을 인자로 줌
   const renderPhoto = ({ item }) => {
@@ -54,6 +60,14 @@ function Feed({ navigation }) {
   return (
     <ScreenLayout loading={loading}>
       <FlatList
+        onEndReached={() =>
+          fetchMore({
+            variables: {
+              offset: data?.seeFeed?.length,
+            },
+          })
+        }
+        onEndReachedThreshold={0.05}
         refreshing={refreshing}
         onFresh={refetch}
         style={{ width: "100%" }}

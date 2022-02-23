@@ -170,3 +170,19 @@ Flat list
 
 apollo는 데이터를 캐쉬에 저장, 새로고침 했다고 다시 화면 전체 렌더링하지 않고
 바뀐부분만 업데이트
+
+Infinite Scroll
+    server : take,offset 설정
+    onEndReached : 끝에 도달했을 때 함수 호출
+    onEndReachedThreshold : 끝을 재지정, 중간쯤부터 끝났다고 인식시켜서 리로딩이 빠르다고 느끼게 할 수 있음
+    fetchMore : 기존 결과 유지하면서 새로운 결과 추가
+    
+    typePolicy
+        component의 state를 바꾸지 않는 이상 no rerendering
+        cache의 data만 변경함
+        seeFeed(offset:0)과 seeFeed(offset:2)는 전혀 다른 data로 apollo cache는 인식
+        같은 데이터로 인식시켜서 data에 변화가 있음을 알리고, rerendering 유도
+        query에 따라 구별시키는 것을 막음
+        Apollo client의 InMemoryCache에서 configure
+        새롭게 fetchMore할 때 merge하는 방식도 수정 가능
+        
