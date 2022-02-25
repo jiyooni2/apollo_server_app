@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components/native";
-import { Touchable, TouchableOpacity, useWindowDimensions } from "react-native";
+import {
+  Touchable,
+  TouchableOpacity,
+  useWindowDimensions,
+  Image,
+} from "react-native";
 import PropTypes from "prop-types";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
@@ -24,6 +29,7 @@ const Username = styled.Text`
 const File = styled.Image``;
 const Actions = styled.View`
   flex-direction: row;
+  padding: 7px;
   align-items: center;
 `;
 //Like and Comment
@@ -32,10 +38,11 @@ const Action = styled.TouchableOpacity`
 `;
 const Likes = styled.Text`
   color: white;
-  margin: 7px 0px;
+  margin: 0px 7px;
   font-weight: 600;
 `;
 const Caption = styled.View`
+  padding: 7px;
   flex-direction: row;
 `;
 const CaptionText = styled.Text`
@@ -49,12 +56,19 @@ const ExtractContainer = styled.View`
 function Photo({ id, user, caption, file, isLiked, likes }) {
   const navigation = useNavigation();
   //get the devices's width
-  const { width, height } = useWindowDimensions();
-  const [imageHeight, setImageHeight] = useState(height - 450);
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+  const [imageHeight, setImageHeight] = useState(screenHeight - 450);
+
+  // 원래 받아서 처리해야되느데 일단 이렇게 하자
+  isLiked = true;
 
   useEffect(() => {
     Image.getSize(file, (width, height) => {
-      setImageHeight(height);
+      if (height > screenHeight - 100) {
+        setImageHeight(screenHeight - 200);
+      } else {
+        setImageHeight(height);
+      }
     });
   });
 
@@ -66,7 +80,7 @@ function Photo({ id, user, caption, file, isLiked, likes }) {
       </Header>
       <File
         resizeMode="cover"
-        style={{ width, height: imageHeight }}
+        style={{ width: screenWidth, height: imageHeight }}
         source={{ uri: file }}
       />
       <Actions>
@@ -105,9 +119,9 @@ Photo.propTypes = {
   }),
   caption: PropTypes.string,
   file: PropTypes.string.isRequired,
-  isLiked: PropTypes.bool.isRequired,
+  isLiked: PropTypes.bool,
   likes: PropTypes.number.isRequired,
-  commentNumber: PropTypes.number.isRequired,
+  comments: PropTypes.number.isRequired,
 };
 
 export default Photo;

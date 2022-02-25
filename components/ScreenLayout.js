@@ -3,6 +3,7 @@ import React from "react";
 import { ActivityIndicator, View } from "react-native";
 
 function ScreenLayout({ loading, children }) {
+  console.log(children);
   return (
     <View
       style={{
@@ -12,7 +13,7 @@ function ScreenLayout({ loading, children }) {
         justifyContent: "center",
       }}
     >
-      {loading ? <ActivityIndicator color="white" /> : { children }}
+      {loading ? <ActivityIndicator color="white" /> : children}
     </View>
   );
 }
