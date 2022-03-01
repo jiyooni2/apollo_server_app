@@ -56,7 +56,6 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
-      <StatusBar mode="auto"></StatusBar>
       <NavigationContainer>
         {isLoggedIn ? <LoggedInNav /> : <LoggedOutNav />}
       </NavigationContainer>

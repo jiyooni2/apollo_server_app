@@ -27,7 +27,7 @@ export const logUserOut = async () => {
 };
 
 const httpLink = createHttpLink({
-  uri: "https://horrible-firefox-36.loca.lt/graphql",
+  uri: "https://angry-dingo-73.loca.lt/graphql",
 });
 
 //setContext : to add token into the header, context setter

@@ -9,6 +9,8 @@ import {
 import PropTypes from "prop-types";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import { useMutation } from "@apollo/client";
+import { gql } from "@apollo/client";
 
 const Container = styled.View``;
 const Header = styled.TouchableOpacity`
@@ -53,19 +55,45 @@ const ExtractContainer = styled.View`
   padding: 10px;
 `;
 
+const TOGGLE_LIKE_MUTATION = gql`
+  mutation ($id: Int!) {
+    toggleLike(id: $id) {
+      ok
+      error
+    }
+  }
+`;
+
 function Photo({ id, user, caption, file, isLiked, likes }) {
+  console.log(id, user, caption, isLiked, likes);
+  const [liked, setLiked] = useState(isLiked);
+  const [likesNumber, setLikesNumber] = useState(likes);
+
   const navigation = useNavigation();
   //get the devices's width
   const { width: screenWidth, height: screenHeight } = useWindowDimensions();
   const [imageHeight, setImageHeight] = useState(screenHeight - 450);
 
-  // 원래 받아서 처리해야되느데 일단 이렇게 하자
-  isLiked = true;
+  const onCompleted = (data) => {
+    const { ok } = data.toggleLike;
+    if (ok) {
+      setLiked((current) => !current);
+      if (liked) {
+        setLikesNumber((current) => current - 1);
+      } else {
+        setLikesNumber((current) => current + 1);
+      }
+    }
+  };
+
+  const [toggleLike, { data, loading }] = useMutation(TOGGLE_LIKE_MUTATION, {
+    onCompleted,
+  });
 
   useEffect(() => {
     Image.getSize(file, (width, height) => {
       if (height > screenHeight - 100) {
-        setImageHeight(screenHeight - 200);
+        setImageHeight(screenHeight - 300);
       } else {
         setImageHeight(height);
       }
@@ -84,14 +112,14 @@ function Photo({ id, user, caption, file, isLiked, likes }) {
         source={{ uri: file }}
       />
       <Actions>
-        <Action>
+        <Action onPress={() => toggleLike({ variables: { id } })}>
           <Ionicons
-            name={isLiked ? "heart" : "heart-outline"}
-            color={isLiked ? "tomato" : "white"}
+            name={liked ? "heart" : "heart-outline"}
+            color={liked ? "tomato" : "white"}
             size={22}
           ></Ionicons>
         </Action>
-        <Action onPress={() => navigation.navigate("Comments")}>
+        <Action onPress={() => navigation.navigate("CommentsScreen")}>
           <Ionicons
             name="chatbubble-outline"
             color="white"
@@ -99,8 +127,12 @@ function Photo({ id, user, caption, file, isLiked, likes }) {
           ></Ionicons>
         </Action>
       </Actions>
-      <TouchableOpacity onPress={() => navigation.navigate("LikesScreen")}>
-        <Likes>{likes === 1 ? "1 like" : `${likes} likes`}</Likes>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("LikesScreen", { id })}
+      >
+        <Likes>
+          {likesNumber <= 1 ? likesNumber + " like" : `${likesNumber} likes`}
+        </Likes>
       </TouchableOpacity>
       <Caption>
         <CaptionText>{caption}</CaptionText>
@@ -121,7 +153,6 @@ Photo.propTypes = {
   file: PropTypes.string.isRequired,
   isLiked: PropTypes.bool,
   likes: PropTypes.number.isRequired,
-  comments: PropTypes.number.isRequired,
 };
 
 export default Photo;

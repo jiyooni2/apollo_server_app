@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components/native";
 import { COMMENT_FRAGMENT, PHOTO_FRAGMENT } from "../fragment";
 import { gql, useQuery } from "@apollo/client";
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList } from "react-native";
 import Photo from "../components/Photo";
 import ScreenLayout from "./../components/ScreenLayout";
 
@@ -28,8 +28,18 @@ const SEE_FEED_QUERY = gql`
         username
         avatar
       }
+      isLiked
       caption
-      comments
+      comments {
+        id
+        user {
+          username
+          avatar
+        }
+        payload
+        isMine
+        createdAt
+      }
       createdAt
       isMine
     }
@@ -52,10 +62,10 @@ function Feed({ navigation }) {
 
   const onRefresh = () => {
     setRefreshing(true);
-    console.log("aaa");
     refetch();
     setRefreshing(false);
   };
+
   return (
     <ScreenLayout loading={loading}>
       <FlatList
@@ -75,7 +85,7 @@ function Feed({ navigation }) {
         keyExtractor={(photo) => "" + photo.id}
         renderItem={renderPhoto}
         showsVerticalScrollIndicator={false}
-      ></FlatList>
+      />
     </ScreenLayout>
   );
 }

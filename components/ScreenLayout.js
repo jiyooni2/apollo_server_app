@@ -3,7 +3,6 @@ import React from "react";
 import { ActivityIndicator, View } from "react-native";
 
 function ScreenLayout({ loading, children }) {
-  console.log(children);
   return (
     <View
       style={{
@@ -18,7 +17,7 @@ function ScreenLayout({ loading, children }) {
   );
 }
 
-ScreenLayout.PropTypes = {
+ScreenLayout.propTypes = {
   loading: PropTypes.bool.isRequired,
 };
 

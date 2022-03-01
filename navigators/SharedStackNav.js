@@ -1,5 +1,8 @@
 import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  TransitionPresets,
+} from "@react-navigation/stack";
 import Profile from "../screens/Profile";
 import Feed from "../screens/Feed";
 import Search from "../screens/Search";
@@ -10,12 +13,15 @@ import Likes from "./../screens/Likes";
 import Comments from "./../screens/Comments";
 
 const Stack = createStackNavigator();
+const TransitionScreenOptions = {
+  ...TransitionPresets.SlideFromRightIOS, // This is where the transition happens
+};
 
 export default function SharedStackNav({ screenName }) {
   return (
     <Stack.Navigator
-      mode="card"
       screenOptions={{
+        ...TransitionPresets.SlideFromRightIOS,
         headerTintColor: "white",
         headerStyle: {
           backgroundColor: "black",
@@ -33,7 +39,7 @@ export default function SharedStackNav({ screenName }) {
               <Image
                 style={{
                   maxWidth: "100%",
-                  maxHeight: 100,
+                  maxHeight: "100%",
                 }}
                 resizeMode="center"
                 source={require("../assets/logo.png")}
