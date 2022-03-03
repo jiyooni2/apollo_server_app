@@ -8,7 +8,7 @@ import Feed from "../screens/Feed";
 import Search from "../screens/Search";
 import Notifications from "../screens/Notifications";
 import Photo from "../screens/Photo";
-import { Image } from "react-native";
+import { Image, Platform, StatusBar } from "react-native";
 import Likes from "./../screens/Likes";
 import Comments from "./../screens/Comments";
 
@@ -25,9 +25,13 @@ export default function SharedStackNav({ screenName }) {
         headerTintColor: "white",
         headerStyle: {
           backgroundColor: "black",
+          height: 90,
         },
         headerTitleAlign: "center",
         headerBackTitleVisible: false,
+        headerTitleContainerStyle: {
+          marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+        },
       }}
     >
       {screenName === "Feed" ? (
@@ -39,7 +43,7 @@ export default function SharedStackNav({ screenName }) {
               <Image
                 style={{
                   maxWidth: "100%",
-                  maxHeight: "100%",
+                  height: "100%",
                 }}
                 resizeMode="center"
                 source={require("../assets/logo.png")}
