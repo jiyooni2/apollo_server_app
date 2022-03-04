@@ -58,6 +58,7 @@ function App() {
     <ApolloProvider client={client}>
       <NavigationContainer>
         {isLoggedIn ? <LoggedInNav /> : <LoggedOutNav />}
+        <StatusBar mode="white" />
       </NavigationContainer>
     </ApolloProvider>
   );

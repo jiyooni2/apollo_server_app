@@ -213,3 +213,9 @@ Stack에서 보여주고 싶은 스크린과 숨기고 싶은 스크린을 순�
 
 navigator가 navigation prop을 만듦
 
+
+Tabs.Screen에 컴포넌트를 넣으면 어떤것이든 렌더링 가능
+
+expo-media-library
+    유저의 디바이스의 갤러리(미디어)에 접근하기 위해 필요
+    

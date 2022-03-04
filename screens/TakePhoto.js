@@ -13,12 +13,12 @@ const Text = styled.Text`
   font-size: 50px;
 `;
 
-function Upload() {
+function TakePhoto() {
   return (
     <Container>
-      <Text>Upload</Text>
+      <Text>TakePhoto</Text>
     </Container>
   );
 }
 
-export default Upload;
+export default TakePhoto;
