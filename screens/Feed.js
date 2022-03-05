@@ -5,6 +5,7 @@ import { gql, useQuery } from "@apollo/client";
 import { FlatList } from "react-native";
 import Photo from "../components/Photo";
 import ScreenLayout from "./../components/ScreenLayout";
+import { isLoggedInVar } from "./../apollo";
 
 const Container = styled.View`
   align-items: center;
@@ -52,6 +53,8 @@ function Feed({ navigation }) {
   const { data, loading, refetch, fetchMore } = useQuery(SEE_FEED_QUERY, {
     variables: { offset },
   });
+
+  console.log(data);
 
   //각각 하나씩 item을 인자로 줌
   const renderPhoto = ({ item }) => {

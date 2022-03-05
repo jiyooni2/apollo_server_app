@@ -219,3 +219,9 @@ Tabs.Screen에 컴포넌트를 넣으면 어떤것이든 렌더링 가능
 expo-media-library
     유저의 디바이스의 갤러리(미디어)에 접근하기 위해 필요
     
+expo-camera
+    카메라 사용    
+    docs
+    사진 찍는것, 줌, 플래쉬,전환 등등 사용 가능
+    사진 짂으면, 캐쉬에 저장
+    저장하려면 MediaLibrary사용

@@ -10,6 +10,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../colors";
+import { StatusBar } from "expo-status-bar";
 
 const Container = styled.View`
   justify-content: center;
